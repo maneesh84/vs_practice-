@@ -1,33 +1,37 @@
-// function asyncfunc1(){
-//   return new Promise((resolved,reject)=>{
-//     setTimeout(()=>{
-//       console.log("Async function 1 executed");
-//       resolved("Result from async function 1");
-//     }, 5000)
-// })
-// }
-// function async2(){
-//   return new Promise(
-//     (resolved,reject)=>{
-//     setTimeout(()=>{
-//       // console.log("Async function 2 executed");
-//       reject("Result from async function 2rejected");
-//     },5000)
-//     }
-//   )
-// }
+//call back hell
 
-// let promise1=asyncfunc1();
-// console.log("searching for prmise1....")
-// promise1.then((resut)=>{
-//   console.log("Promise1 found");
-//   let promise2=async2();
-//   console.log("searching for promise 2....");
-//   promise2.catch((reject)=>{
-//     console.log("Promise2 found");
-//   })
+function asyncfunc1(){
+  return new Promise((resolved,reject)=>{
+    setTimeout(()=>{
+      console.log("Async function 1 executed");
+      resolved("Result from async function 1");
+    }, 5000)
+})
+}
+function async2(){
+  return new Promise(
+    (resolved,reject)=>{
+    setTimeout(()=>{
+      // console.log("Async function 2 executed");
+      reject("Result from async function 2rejected");
+    },5000)
+    }
+  )
+}
 
-// })
+let promise1=asyncfunc1();
+console.log("searching for prmise1....")
+promise1.then((resut)=>{
+  console.log("Promise1 found");
+  let promise2=async2();
+  console.log("searching for promise 2....");
+  promise2.catch((reject)=>{
+    console.log("Promise2 found");
+  })
+
+})
+
+//promise chaining
 function getdata(dataid){
   return new Promise((resolved,reject)=>{
     setTimeout(()=>{
@@ -46,6 +50,32 @@ getdata(1).then((res)=>{
   console.log(res);
 
 })
+
+
+// async await function
+
+function getdata(dataid){
+  return new Promise((resolved,reject)=>
+    setTimeout(()=>{
+      console.log("Data",dataid);
+      resolved(200);
+    },2000))
+}
+
+async function getalldata(){
+  console.log("fetching data1...")
+  await getdata(1);
+  console.log("fetching data2...")
+  await getdata(2);
+  console.log("fetching data3...")
+  await getdata(3);
+  console.log("fetching data4...")
+  await getdata(4);
+
+}
+
+console.log(getalldata());
+
 
 
 
